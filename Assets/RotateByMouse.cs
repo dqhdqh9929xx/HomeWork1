@@ -4,30 +4,27 @@ using UnityEngine;
 
 public class RotateByMouse : MonoBehaviour
 {
-    public float anglePerSecond = 150f;
-    public Transform playerCamera; // Gắn Camera (child của player) ở đây
+    public float rotateSpeed = 150f;
+    public Transform cam;
 
-    private float pitch = 0f; // góc nhìn dọc
+    private float verticalAngle = 0f;
 
     private void Start()
     {
-        // Khóa chuột vào giữa màn hình
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float moveX = Input.GetAxis("Mouse X");
+        float moveY = Input.GetAxis("Mouse Y");
 
-        // Xử lý xoay ngang (yaw) -> xoay player
-        float yaw = mouseX * anglePerSecond * Time.deltaTime;
-        transform.Rotate(0, yaw, 0);
+        float horizontalAngle = moveX * rotateSpeed * Time.deltaTime;
+        transform.Rotate(0, horizontalAngle, 0);
 
-        // Xử lý xoay dọc (pitch) -> xoay camera
-        pitch -= mouseY * anglePerSecond * Time.deltaTime;
-        pitch = Mathf.Clamp(pitch, -90f, 90f); // Giới hạn góc nhìn lên/xuống
+        verticalAngle -= moveY * rotateSpeed * Time.deltaTime;
+        verticalAngle = Mathf.Clamp(verticalAngle, -90f, 90f);
 
-        playerCamera.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+        cam.localRotation = Quaternion.Euler(verticalAngle, 0f, 0f);
     }
 }

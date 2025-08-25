@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class MoveByKey : MonoBehaviour
 {
-    public CharacterController characterController;
-    public float movingSpeed;
+    public CharacterController ctrl;
+    public float speed;
 
-    private void OnValidate() => characterController = GetComponent<CharacterController>();
+    private void OnValidate() => ctrl = GetComponent<CharacterController>();
 
     private void Update()
     {
-        float hInput = Input.GetAxis("Horizontal");
-        float vInput = Input.GetAxis("Vertical");
-        Vector3 direction = transform.right * hInput + transform.forward * vInput;
-        characterController.SimpleMove(direction * movingSpeed);
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+        Vector3 dir = transform.right * x + transform.forward * z;
+        ctrl.SimpleMove(dir * speed);
     }
 }
